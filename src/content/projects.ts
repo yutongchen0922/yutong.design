@@ -38,7 +38,7 @@ export const projects: Project[] = [
     client: "WindBorne Systems",
     date: "Oct 2025",
     tags: ["0 to 1", "Vibecoding", "Responsive Design"],
-    summary: "TODO — one line about what this project did and the outcome.",
+    summary: "TODO — write your one-liner",
     externalUrl: "https://loonicon.windbornesystems.com/",
     featured: true,
   },

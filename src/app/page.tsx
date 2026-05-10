@@ -3,20 +3,40 @@ import { siteConfig } from "@/content/site";
 import { featuredProjects } from "@/content/projects";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { SkyBackground } from "@/components/motion/SkyBackground";
+import { HeroText } from "@/components/motion/HeroText";
+import { Previously } from "@/components/sections/Previously";
 
 export default function HomePage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-16 md:py-24">
-      {/* HERO ---------------------------------------------------------- */}
-      <section className="max-w-3xl">
-        <p className="text-lg text-muted">hey,</p>
+    <>
+      {/* HERO with sky background */}
+      <section className="relative min-h-screen overflow-hidden">
+        <SkyBackground
+          skyColor="#f4f6f9"
+          fadeToColor="#f4f6f9"
+          starColor="100, 160, 220"
+          shootingStarInterval={6}
+          shootingStarDuration={3}
+          staticStarCount={0}
+        />
+        <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-16 md:py-24">
+          <div className="max-w-3xl">
+            <HeroText lines={siteConfig.hero} />
 
-        <h1 className="mt-2 font-display text-5xl leading-tight md:text-7xl">
-          I&rsquo;m {siteConfig.name}
-        </h1>
+            <p className="mt-10">
+              <Link
+                href={siteConfig.resumeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block border border-fg/30 px-4 py-2 text-sm hover:bg-fg hover:text-bg transition"
+              >
+                Resume ↗
+              </Link>
+            </p>
+          </div>
 
-        <div className="mt-8 space-y-2 text-base">
-          <p>
+          <p className="mt-auto mb-24 text-base md:mb-32">
             Currently{" "}
             <Link
               href={siteConfig.currently.href}
@@ -26,71 +46,43 @@ export default function HomePage() {
             >
               @{siteConfig.currently.label}
             </Link>
+            <span className="text-muted">
+              {" — "}
+              {siteConfig.currently.tagline}
+            </span>
           </p>
+        </div>
+      </section>
 
-          <p className="text-muted">
-            Previously{" "}
-            {siteConfig.previously.map((p, i) => (
-              <span key={p.href}>
-                <Link
-                  href={p.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline underline-offset-4 hover:text-fg"
-                >
-                  @{p.label}
-                </Link>
-                {i < siteConfig.previously.length - 1 ? " · " : ""}
-              </span>
+      {/* PREVIOUSLY — rolling logos of past affiliations */}
+      <Previously />
+
+      {/* FEATURED PROJECTS — outside the sky, on normal background */}
+      <div className="mx-auto max-w-6xl px-6 py-16 md:py-24">
+        <section>
+          <FadeIn>
+            <div className="flex items-baseline justify-between">
+              <h2 className="font-display text-3xl md:text-4xl">
+                Featured Projects
+              </h2>
+              <Link
+                href="/work"
+                className="text-sm text-muted hover:text-fg transition"
+              >
+                View all →
+              </Link>
+            </div>
+          </FadeIn>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            {featuredProjects.map((project, i) => (
+              <FadeIn key={project.slug} delay={i * 0.05}>
+                <ProjectCard project={project} />
+              </FadeIn>
             ))}
-          </p>
-        </div>
-
-        <p className="mt-8">
-          <Link
-            href={siteConfig.resumeUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-block border border-fg/30 px-4 py-2 text-sm hover:bg-fg hover:text-bg transition"
-          >
-            Resume ↗
-          </Link>
-        </p>
-      </section>
-
-      {/* BIO ----------------------------------------------------------- */}
-      <FadeIn className="mt-24 max-w-2xl">
-        <p className="text-xl leading-relaxed">
-          A product designer and researcher passionate about crafting
-          innovative experiences. Replace this paragraph with your own
-          bio — keep it short, two or three sentences max.
-        </p>
-      </FadeIn>
-
-      {/* FEATURED PROJECTS -------------------------------------------- */}
-      <section className="mt-24">
-        <FadeIn>
-          <div className="flex items-baseline justify-between">
-            <h2 className="font-display text-3xl md:text-4xl">
-              Featured Projects
-            </h2>
-            <Link
-              href="/work"
-              className="text-sm text-muted hover:text-fg transition"
-            >
-              View all →
-            </Link>
           </div>
-        </FadeIn>
-
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {featuredProjects.map((project, i) => (
-            <FadeIn key={project.slug} delay={i * 0.05}>
-              <ProjectCard project={project} />
-            </FadeIn>
-          ))}
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 }

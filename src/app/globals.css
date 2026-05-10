@@ -7,15 +7,17 @@
  * utility automatically (e.g. --color-accent → bg-accent, text-accent).
  */
 @theme {
-  /* Colors */
-  --color-bg: #fafaf7;
-  --color-fg: #1a1a1a;
-  --color-muted: #737373;
-  --color-accent: #ff5722;
+  /* Colors — cool tone */
+  --color-bg: #f4f6f9;
+  --color-fg: #1c1f26;
+  --color-muted: #6b7280;
+  --color-accent: #3b82f6;
 
   /* Fonts — wired up to next/font in layout.tsx */
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-display: var(--font-display), serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+  --font-pixel: var(--font-pixel), cursive;
 
   /* Custom radius / spacing */
   --radius-card: 1.25rem;
@@ -31,6 +33,18 @@ body {
   color: var(--color-fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Marquee scroll for <Marquee /> primitive — content track translates by 50%
+   of its width; track is rendered as two identical halves so the wrap is
+   seamless. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* Optional: prefers-reduced-motion respect for Motion library users */
